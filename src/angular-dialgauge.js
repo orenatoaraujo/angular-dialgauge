@@ -8,7 +8,7 @@
 angular.module('angular-dialgauge', [
     'ngSanitize'
 ])
-    .directive('ngDialGauge', ["$window", "$sce", "$interval", function ($window, $sce, $interval) {
+    .directive('ngDialGauge', ["$window", "$sce", "$interval", "$filter", function ($window, $sce, $interval, $filter) {
         return {
             restrict: 'E',                  // Use as element
             scope: {                        // Isolate scope
@@ -39,7 +39,8 @@ angular.module('angular-dialgauge', [
                 scaleMajorLength: '@',
                 scaleMajorSteps: '@',
                 percent: '@',
-                options: '=?'
+                options: '=?',
+                precisionValue: '@'
             },
             template: '' +
             '<div style="width:100%;height:100%;" ng-bind-html="gauge"></div>',
@@ -89,7 +90,8 @@ angular.module('angular-dialgauge', [
                     scaleMajorWidth: 1,
                     scaleMajorLength: 5,
                     scaleMajorSteps: 9,
-                    percent: false
+                    percent: false,
+                    precisionValue: 0
                 };
 
                 // Set default configuration
@@ -427,7 +429,7 @@ angular.module('angular-dialgauge', [
 
                     if (newValue !== undefined) {
                         path += '<text text-anchor="middle" x="' + center + '" y="' + center + '">' +
-                        '<tspan class="dialgauge-value">' + Math.floor(newValue) + '</tspan>';
+                        '<tspan class="dialgauge-value">' + $filter('number')(newValue, cfg.precisionValue) + '</tspan>';
                     }
 
                     if (cfg.units != undefined) {
