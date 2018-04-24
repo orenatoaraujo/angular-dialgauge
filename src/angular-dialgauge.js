@@ -396,7 +396,7 @@ angular.module('angular-dialgauge', [
                         end = value + startAngle;
                     }
                     if (end > Math.PI * 2) {
-                        end -= Math.PI * 2;
+                        end -= Math.PI * 2; 
                     }
 
                     var color;
